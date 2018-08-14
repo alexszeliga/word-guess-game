@@ -20,45 +20,58 @@
 
 
 var hangmanGame = {
-    author:"Alexander Szeliga",
-    unkWordArray: ["dog","cat","taco","pebble"],
-    legalLetters: ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"],
-    unguessedLetters: ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"],
+    author: "Alexander Szeliga",
+    unkWordArray: ["dog", "cat", "taco", "pebble"],
+    legalLetters: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+    unguessedLetters: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
     guessedLetters: [],
 
-    letterCheck: function(userLetter) {
+    letterCheck: function (userLetter) {
         // checks if a letter is in the legal letters array, which is precursor to checking if it's
         // already been guessed, which is precursor to determining if it's in the unkWord
-        if (this.legalLetters.indexOf(userLetter)<0) {
+        if (this.legalLetters.indexOf(userLetter) < 0) {
             return false;
         } else {
             return true;
         }
     },
 
-    confLetterUnguessed: function(userLetter) {
+    confLetterUnguessed: function (userLetter) {
         // checks if letter is in the unguessedLetters array, returns boolean true if it is
-        if (this.unguessedLetters.indexOf(userLetter)<0) {
+        if (this.unguessedLetters.indexOf(userLetter) < 0) {
             return false;
         } else {
             return true;
         }
     },
 
-    randomWord: function() {
+    randomWord: function () {
         // returns a random word from the unkWordArray
         var arrInd = Math.floor(Math.random() * this.unkWordArray.length);
         return this.unkWordArray[arrInd];
     },
 
-    wordArray: function(word) {
+    wordArray: function (word) {
         // lets try turning a string into an array of it's composite letters
         var wordAsArray = []
-        for (i=0; i<word.length;i++) {
+        for (i = 0; i < word.length; i++) {
             wordAsArray.push(word.charAt(i));
         }
         return wordAsArray;
     },
+
+    genBoolWordArray: function (word) {
+        // this function will generate an array that has as many boolean items as there are letters
+        // with a default value of 'false'. this will be used to control a lot of the game mechanics
+        // i.e. searching for the indexOf(false) returning -1 will indicate the word is done
+        var boolArray = []
+        for (i = 0; i < word.length; i++) {
+            boolArray.push(false);
+        }
+        return boolArray;
+    },
+
+
 
 
 };
@@ -73,46 +86,76 @@ var hangmanGame = {
 var gameWord = hangmanGame.randomWord();
 // turn that word into an array of the constituent letters
 var gameWordArray = hangmanGame.wordArray(gameWord);
+// create an array with one boolean for each letter in the gameWord
+var gameBoolArray = hangmanGame.genBoolWordArray(gameWord);
 // initialize the 'number of remaining letters' variable
 var cntRemainingLetters = gameWordArray.length;
+// init value for underscore view of word ( Taco = __c_ )
+var undView = genUnderscoreView(gameWord, gameBoolArray);
 // init value for player lives
 var userLives = 9;
 
+function genUnderscoreView(word, array) {
+    var outputString = "";
+    for (i = 0; i < word.length; i++) {
+        if (array[i]) {
+            outputString = outputString + word.charAt(i);
+        } else {
+            outputString = outputString + "_";
+        }
+    }
+    return outputString;
+}
+
+function consoleTest() {
+    console.clear();
+    console.log("The game word is: " + gameWord);
+    console.log(genUnderscoreView(gameWord, gameBoolArray));
+
+}
 console.log("The game word is: " + gameWord);
 // user presses a key
-document.onkeyup = function(event){
-    
+document.onkeyup = function (event) {
+
     // set the key to a variable and turn it lower case
     var userInput = event.key.toLowerCase();
 
     // confirming that the userInput is a legal letter, and is unguessed
     if (hangmanGame.letterCheck(userInput) && hangmanGame.confLetterUnguessed(userInput)) {
-        
+
         // we're going to add the guessed letter to the array of guessed letters and remove it from
         // the list of unguessed letters
         hangmanGame.guessedLetters.push(userInput);
-        hangmanGame.unguessedLetters.splice(hangmanGame.unguessedLetters.indexOf(userInput),1);
-        
+        hangmanGame.unguessedLetters.splice(hangmanGame.unguessedLetters.indexOf(userInput), 1);
+
         //is the guessed letter in the game word?
         if (gameWordArray.indexOf(userInput) < 0) {
+            consoleTest();
             console.log("Wrong!");
             // things that need to happen here
             // decrement number of lives by 1
+            // add next 'body part' to hangman
         } else {
+            // iterate through the boolean array, flipping where necessary.
+            for (i = 0; i < gameBoolArray.length; i++) {
+                if (userInput == gameWordArray[i]) {
+                    gameBoolArray[i] = true;
+                }
+            }
+            consoleTest();
             console.log("Correct");
-            // things that need to happen here:
-            // --decrement remaining letters by the number of correct letters (duplicates are a thing that
-            // will destroy this mechanic)
-            // --(eventually) update the display to show correct letters
+
         }
 
     }
     // confirms user letter is good, but it's not on the unguessed list, which implies it's already been guessed
     else if (hangmanGame.letterCheck(userInput) && hangmanGame.confLetterUnguessed(userInput) == false) {
+        consoleTest();
         console.log("You've already guessed this letter");
-    } 
+    }
     // illegal input
     else if (hangmanGame.letterCheck(userInput) == false) {
+        consoleTest();
         console.log("Illegal input");
     }
 
