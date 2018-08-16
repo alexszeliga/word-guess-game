@@ -105,7 +105,7 @@ var hangmanGame = {
 function consoleTest() {
     // outputs basic game functions in console for testing
     console.clear();
-    console.log("The game word is: " + hangmanGame.gameWord);
+    // console.log("The game word is: " + hangmanGame.gameWord);
     console.log("Remaining lives: " + hangmanGame.playerLives);
     console.log(hangmanGame.genUnderscoreView(hangmanGame.gameWord, hangmanGame.gameBoolArray));
     console.log("Player wins: " + hangmanGame.playerWins);
