@@ -34,6 +34,11 @@ var hangmanGame = {
     // these next two are only touched when the player wins or loses.
     playerWins: 0,
     playerLosses: 0,
+    undTarget: document.getElementById("und-display"),
+    consoleText: document.getElementById("console-output"),
+    livesDisplay: document.getElementById("player-lives"),
+    winsDisplay: document.getElementById("player-wins"),
+    lossesDisplay: document.getElementById("player-losses"),
     gameInit: function () {
         // set/reset all game variables
         this.playerLives = 9;
@@ -43,6 +48,7 @@ var hangmanGame = {
         this.gameWordArray = this.wordArray(this.gameWord);
         this.gameBoolArray = this.genBoolWordArray(this.gameWord)
         this.gameOver = false;
+        this.consoleText.textContent = "Press any key on your keyboard to guess a letter!";
     },
     letterCheck: function (userLetter) {
         // checks if a letter is in the legal letters array, which is precursor to checking if it's
@@ -96,6 +102,11 @@ var hangmanGame = {
         }
         return outputString;
     },
+
+    updateOutput: function () {
+        this.undTarget.textContent = this.genUnderscoreView(this.gameWord, this.gameBoolArray);
+        this.livesDisplay.textContent = "Lives remaining: " + this.playerLives;
+    }
 };
 //
 //----------------------------------------------------------------------------------------------
@@ -105,7 +116,7 @@ var hangmanGame = {
 function consoleTest() {
     // outputs basic game functions in console for testing
     console.clear();
-    // console.log("The game word is: " + hangmanGame.gameWord);
+    console.log("The game word is: " + hangmanGame.gameWord);
     console.log("Remaining lives: " + hangmanGame.playerLives);
     console.log(hangmanGame.genUnderscoreView(hangmanGame.gameWord, hangmanGame.gameBoolArray));
     console.log("Player wins: " + hangmanGame.playerWins);
@@ -117,6 +128,7 @@ function consoleTest() {
 //                                       Main gameplay routine
 //----------------------------------------------------------------------------------------------
 //
+hangmanGame.consoleText.textContent = "Press any key to begin...";
 console.log("Press any key to begin...");
 // user presses any key
 document.onkeyup = function (event) {
@@ -133,13 +145,17 @@ document.onkeyup = function (event) {
             if (hangmanGame.gameWordArray.indexOf(userInput) < 0) {
                 // if not, do this: subtract one player life
                 hangmanGame.playerLives = hangmanGame.playerLives - 1;
+                hangmanGame.updateOutput();
                 consoleTest();
+                hangmanGame.updateOutput();
                 // test if lives remain:
                 if (hangmanGame.playerLives > 0) {
+                    hangmanGame.consoleText.textContent = "Wrong!";
                     console.log("Wrong!");
                 } else {
                     // add a playerLoss
                     hangmanGame.playerLosses++;
+                    hangmanGame.consoleText.textContent = "game lose, press any key to play again";
                     console.log("game lose, press any key to play again");
                     hangmanGame.gameOver = true;
                 }
@@ -150,32 +166,38 @@ document.onkeyup = function (event) {
                         hangmanGame.gameBoolArray[i] = true;
                     }
                 }
+                hangmanGame.updateOutput();
                 consoleTest();
                 // check if the word is complete:
                 if (hangmanGame.gameBoolArray.indexOf(false) == -1) {
                     // add a win:
                     hangmanGame.playerWins++;
+                    hangmanGame.consoleText.textContent = "game win, press any key to play again";
                     console.log("game win, press any key to play again");
                     hangmanGame.gameOver = true;
                 } else {
+                    hangmanGame.consoleText.textContent = "Correct";
                     console.log("Correct");
                 }
             }
         }
         else if (hangmanGame.letterCheck(userInput) && hangmanGame.confLetterUnguessed(userInput) == false) {
             // confirms user letter is good, but it's not on the unguessed list, which implies it's already been guessed
+            hangmanGame.updateOutput();
             consoleTest();
             console.log("You've already guessed this letter");
         }
         else if (hangmanGame.letterCheck(userInput) == false) {
             // illegal input
+            hangmanGame.updateOutput();
             consoleTest();
             console.log("Illegal input");
         }
     } else {
         // this code only runs if the user presses a key while hangmanGame.gameOver = false
         // it re-inits all the game variables with a new random word and starts the game over again.
-        hangmanGame.gameInit()
+        hangmanGame.gameInit();
+        hangmanGame.updateOutput();
         consoleTest();
     }
 };

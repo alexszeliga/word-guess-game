@@ -1,13 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hangman, but with a quirky twist.</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <!-- <h1>Press Ctrl + Shift + J to play hangman in the console.</h1> -->
+    <!-- header-box is the visual-styling of the header -->
+    <div class="header-box">
+        <!-- header-content-container defines where child elements display in the header -->
+        <section class="header-content-container">
+            <h1>Here's a big ol' header area for a logo and such</h1>
+        </section>
+    </div>
+    <!-- primary-field defines positioning and layout for content-box -->
+    <div class="primary-field">
+        <div class="content-box">
+            <!-- primary-container defines where child elements display in the primary content area -->
+            <section id="game-area" class="primary-container">
+                <!-- this div will be the console output for the game, it will show how the game reacts to your keystrokes -->
+                <div id="und-display"></div>
+
+                <div id="console-output" class="console-text">
+                </div>
+                <div id="player-lives">
+                </div>
+                <div id="player-wins">
+                </div>
+                <div id="player-losses">
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- footer-box is the visual-styling of the footer -->
+    <div class="footer-box">
+        <footer class="footer-content-container">
+            <!-- footer-content-container defines where child elements display in the footer -->
+            <p>Footer content should eventually be here</p>
+        </footer>
+    </div>
     <script src="assets/javascript/game.js"></script>
-    <h1>Press Ctrl + Shift + J to play hangman in the console.</h1>
 </body>
+
 </html>
