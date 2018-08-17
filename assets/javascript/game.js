@@ -106,6 +106,8 @@ var hangmanGame = {
     updateOutput: function () {
         this.undTarget.textContent = this.genUnderscoreView(this.gameWord, this.gameBoolArray);
         this.livesDisplay.textContent = "Lives remaining: " + this.playerLives;
+        this.winsDisplay.textContent = "Wins: " + this.playerWins;
+        this.lossesDisplay.textContent = "Losses: " + this.playerLosses;
     }
 };
 //
@@ -185,12 +187,14 @@ document.onkeyup = function (event) {
             // confirms user letter is good, but it's not on the unguessed list, which implies it's already been guessed
             hangmanGame.updateOutput();
             consoleTest();
+            hangmanGame.consoleText.textContent = "You've already guessed this letter."
             console.log("You've already guessed this letter");
         }
         else if (hangmanGame.letterCheck(userInput) == false) {
             // illegal input
             hangmanGame.updateOutput();
             consoleTest();
+            hangmanGame.consoleText.textContent = "Illegal input";
             console.log("Illegal input");
         }
     } else {

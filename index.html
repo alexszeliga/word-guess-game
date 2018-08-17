@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hangman, but with a quirky twist.</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
     <div class="header-box">
         <!-- header-content-container defines where child elements display in the header -->
         <section class="header-content-container">
-            <h1>Here's a big ol' header area for a logo and such</h1>
+            <h1>Classic 'ol Boring Cowoy Hangman!</h1>
         </section>
     </div>
     <!-- primary-field defines positioning and layout for content-box -->
@@ -25,15 +25,15 @@
             <!-- primary-container defines where child elements display in the primary content area -->
             <section id="game-area" class="primary-container">
                 <!-- this div will be the console output for the game, it will show how the game reacts to your keystrokes -->
+                <div id="game-image-box"><img src="assets/images/cowboy-bill.png" id="game-image"></div>
                 <div id="und-display"></div>
-
-                <div id="console-output" class="console-text">
+                <div id="console-output" class="console-text game-item">
                 </div>
-                <div id="player-lives">
+                <div id="player-lives" class="game-item">
                 </div>
-                <div id="player-wins">
+                <div id="player-wins" class="game-item">
                 </div>
-                <div id="player-losses">
+                <div id="player-losses" class="game-item">
                 </div>
             </section>
         </div>

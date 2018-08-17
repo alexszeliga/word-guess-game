@@ -1,3 +1,77 @@
+
+
+
 /* Stylesheet for Alex Szeliga's hangman-type game
 enjoy in good health, good luck
 */
+/* thanks for the fonts, google! */
+@import url('https://fonts.googleapis.com/css?family=Oswald|Rye');
+
+
+body {
+    background-image: url("wavecut.png");
+    font-family: 'Oswald', sans-serif;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Rye', cursive;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+/* these boxes are visual elements and will have backgrounds and borders that paint to the viewport */
+.header-box {
+    background-color: #FCF6B1;
+    width:100%;
+    padding: 10px 0px;
+    border-bottom: 5px solid #FFBA08;
+}
+
+.footer-box {
+    position:fixed;
+    bottom: 0px;
+    left: 0px;
+    background-color: #584D3D;
+    color: #CBBF7A;
+    width:100%;
+    padding: 10px 0px;
+    border-top: 5px solid #FFBA08;
+}
+
+.content-box {
+    background-color: #CBBF7A;
+    color: #584D3D;
+    width:640px;
+    padding: 10px;
+    margin:auto;
+    border: 3px solid #584D3D;
+    border-radius: 4px; 
+}
+
+/* The primary field provides positioning for main */
+.primary-field {
+    padding: 10px 0px;
+}
+
+/* containers define the area where child elements will spawn and are invisible */
+.header-content-container {
+    width: 640px;
+    margin: auto;
+}
+
+.primary-container {
+    width: 640px;
+    margin: auto;
+}
+
+.footer-content-container {
+    width: 640px;
+    margin: auto;
+}
+
+/* individual element styling */
+
+.game-item {
+    margin-top: 10px;
+}
