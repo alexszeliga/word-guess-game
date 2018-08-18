@@ -21,7 +21,7 @@
 
 var hangmanGame = {
     author: "Alexander Szeliga",
-    unkWordArray: ["dog", "cat", "taco", "pebble", "calisthenics", "orange", "airplane", "tomato", "crazy", "merry", "strenuous", "portend", "eminent", "immense"],
+    unkWordArray: ["cowboy", "horse", "saloon", "highnoon", "draw", "railroad", "gold", "railroad", "whiskey", "bandanna", "boots", "spurs", "saddle", "desert"],
     legalLetters: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
     //the following seven are type-defined, but will be populated by the game init.
     gameWord: "",
@@ -29,6 +29,7 @@ var hangmanGame = {
     unguessedLetters: [],
     guessedLetters: [],
     gameBoolArray: [],
+    usedLetters: "Used Letters: ",
     playerLives: 0,
     gameOver: true,
     // these next two are only touched when the player wins or loses.
@@ -39,19 +40,21 @@ var hangmanGame = {
     livesDisplay: document.getElementById("player-lives"),
     winsDisplay: document.getElementById("player-wins"),
     lossesDisplay: document.getElementById("player-losses"),
+    usedLetterDiplay: document.getElementById("used-letters-container"),
     introSong: document.getElementById("intro-song"),
     correctSound: document.getElementById("correct-sound"),
     wrongSound: document.getElementById("wrong-sound"),
     gameInit: function () {
         // set/reset all game variables
-        this.playerLives = 9;
-        this.gameWord = this.randomWord(),
-            this.guessedLetters = [];
+        this.playerLives = 6;
+        this.gameWord = this.randomWord();
+        this.guessedLetters = [];
         this.unguessedLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
         this.gameWordArray = this.wordArray(this.gameWord);
         this.gameBoolArray = this.genBoolWordArray(this.gameWord)
         this.gameOver = false;
         this.consoleText.textContent = "Choose any letter to get started!";
+        this.usedLetters = "Used Letters: ";
     },
     letterCheck: function (userLetter) {
         // checks if a letter is in the legal letters array, which is precursor to checking if it's
@@ -111,6 +114,8 @@ var hangmanGame = {
         this.livesDisplay.textContent = "Lives: " + this.playerLives;
         this.winsDisplay.textContent = "Wins: " + this.playerWins;
         this.lossesDisplay.textContent = "Losses: " + this.playerLosses;
+        this.usedLetterDiplay.textContent = this.usedLetters;
+
     }
 };
 //
@@ -126,14 +131,15 @@ function consoleTest() {
     console.log(hangmanGame.genUnderscoreView(hangmanGame.gameWord, hangmanGame.gameBoolArray));
     console.log("Player wins: " + hangmanGame.playerWins);
     console.log("Player losses: " + hangmanGame.playerLosses);
-       
+    console.log("Used Letters: " + hangmanGame.usedLetters);
+
 }
 //
 //----------------------------------------------------------------------------------------------
 //                                       Main gameplay routine
 //----------------------------------------------------------------------------------------------
 //
-hangmanGame.consoleText.textContent = "Choose any letter to get started!";
+hangmanGame.consoleText.textContent = "Hey, I'm cowboy Boring Bill. Press any key to get started!";
 // user presses any key
 document.onkeyup = function (event) {
     if (hangmanGame.gameOver == false) {
@@ -144,11 +150,15 @@ document.onkeyup = function (event) {
             // we're going to add the guessed letter to the array of guessed letters and remove it from
             // the list of unguessed letters
             hangmanGame.guessedLetters.push(userInput);
+            hangmanGame.usedLetters += userInput + " "
+            console.log(hangmanGame.usedLetters)
+
             hangmanGame.unguessedLetters.splice(hangmanGame.unguessedLetters.indexOf(userInput), 1);
             //is the guessed letter in the game word?
             if (hangmanGame.gameWordArray.indexOf(userInput) < 0) {
                 // if not, do this: subtract one player life
                 hangmanGame.playerLives = hangmanGame.playerLives - 1;
+                // also, add the current letter to the "guessedLetters" string
                 hangmanGame.updateOutput();
                 consoleTest();
                 hangmanGame.updateOutput();
@@ -159,7 +169,7 @@ document.onkeyup = function (event) {
                 } else {
                     // add a playerLoss
                     hangmanGame.playerLosses++;
-                    hangmanGame.consoleText.textContent = "You've failed me, amigo!";
+                    hangmanGame.consoleText.textContent = "You've failed me, amigo! Press any key...";
                     console.log("game lose, press any key to play again");
                     hangmanGame.gameOver = true;
                 }

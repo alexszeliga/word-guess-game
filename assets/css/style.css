@@ -75,6 +75,7 @@ h1 {
 .footer-content-container {
     width: 640px;
     margin: auto;
+    text-align: center;
 }
 
 /* individual element styling */
@@ -109,5 +110,10 @@ h1 {
 
 .game-display-container {
     width: 300px;
+    margin: auto;
+}
+
+#used-letters-container {
+    width: 400px;
     margin: auto;
 }
