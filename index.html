@@ -16,24 +16,37 @@
     <div class="header-box">
         <!-- header-content-container defines where child elements display in the header -->
         <section class="header-content-container">
-            <h1>Classic 'ol Boring Cowoy Hangman!</h1>
+            <h1>'ol Boring Cowboy Hangman!</h1>
         </section>
     </div>
     <!-- primary-field defines positioning and layout for content-box -->
     <div class="primary-field">
-        <div class="content-box">
+        <div class="content-box clearfix">
             <!-- primary-container defines where child elements display in the primary content area -->
             <section id="game-area" class="primary-container">
                 <!-- this div will be the console output for the game, it will show how the game reacts to your keystrokes -->
-                <div id="game-image-box"><img src="assets/images/cowboy-bill.png" id="game-image"></div>
-                <div id="und-display"></div>
-                <div id="console-output" class="console-text game-item">
+                <div id="game-image-box" class="main-img-container">
+                    <img src="assets/images/cowboy-bill.png" id="game-image" class="main-image">
+                    <div class="console-text-container game-item">
+                        <p id="console-output"></p>
+                    </div>
                 </div>
-                <div id="player-lives" class="game-item">
+                <div class="und-container">
+                    <h6 id="und-display">
+                        _ _
+                    </h6>
                 </div>
-                <div id="player-wins" class="game-item">
-                </div>
-                <div id="player-losses" class="game-item">
+
+                <div class="game-display-container">
+                    <div id="player-lives" class="game-item game-display">
+                        Lives: 0
+                    </div>
+                    <div id="player-wins" class="game-item game-display">
+                        Wins: 0
+                    </div>
+                    <div id="player-losses" class="game-item game-display">
+                        Losses: 0
+                    </div>
                 </div>
             </section>
         </div>
@@ -42,9 +55,18 @@
     <div class="footer-box">
         <footer class="footer-content-container">
             <!-- footer-content-container defines where child elements display in the footer -->
-            <p>Footer content should eventually be here</p>
+            <p class="attribution">Created by Alex Szeliga in the August of 2018</p>
         </footer>
     </div>
+    <audio id="intro-song">
+        <source src="assets/audio/introsound.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="correct-sound">
+        <source src="assets/audio/shot.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound">
+        <source src="assets/audio/Ricochet.mp3" type="audio/mpeg">
+    </audio>
     <script src="assets/javascript/game.js"></script>
 </body>
 
