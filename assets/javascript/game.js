@@ -124,14 +124,17 @@ var hangmanGame = {
 //----------------------------------------------------------------------------------------------
 //
 function consoleTest() {
-    // outputs basic game functions in console for testing
-    console.clear();
-    console.log("The game word is: " + hangmanGame.gameWord);
-    console.log("Remaining lives: " + hangmanGame.playerLives);
-    console.log(hangmanGame.genUnderscoreView(hangmanGame.gameWord, hangmanGame.gameBoolArray));
-    console.log("Player wins: " + hangmanGame.playerWins);
-    console.log("Player losses: " + hangmanGame.playerLosses);
-    console.log("Used Letters: " + hangmanGame.usedLetters);
+    //------------------------------------------------------------------------------------------
+    //                                   TO DEBUG, UNCOMMENT THE FOLLOWING FUNCTION
+    //                                   CHEAT: THE GAME WORD WILL DISPLAY IN CONSOLE
+    //------------------------------------------------------------------------------------------
+    // console.clear();
+    // console.log("The game word is: " + hangmanGame.gameWord);
+    // console.log("Remaining lives: " + hangmanGame.playerLives);
+    // console.log(hangmanGame.genUnderscoreView(hangmanGame.gameWord, hangmanGame.gameBoolArray));
+    // console.log("Player wins: " + hangmanGame.playerWins);
+    // console.log("Player losses: " + hangmanGame.playerLosses);
+    // console.log("Used Letters: " + hangmanGame.usedLetters);
 
 }
 //
@@ -152,7 +155,7 @@ document.onkeyup = function (event) {
             // the list of unguessed letters
             hangmanGame.guessedLetters.push(userInput);
             hangmanGame.usedLetters += userInput + " "
-            console.log(hangmanGame.usedLetters)
+            // console.log(hangmanGame.usedLetters)
 
             hangmanGame.unguessedLetters.splice(hangmanGame.unguessedLetters.indexOf(userInput), 1);
             //is the guessed letter in the game word?
@@ -164,12 +167,12 @@ document.onkeyup = function (event) {
                 // test if lives remain:
                 if (hangmanGame.playerLives > 0) {
                     hangmanGame.consoleText.textContent = "Tarnation! That ain't it.";
-                    console.log("Wrong!");
+                    // console.log("Wrong!");
                 } else {
                     // add a playerLoss
                     hangmanGame.playerLosses++;
                     hangmanGame.consoleText.textContent = "You've failed me, amigo! Press any key...";
-                    console.log("game lose, press any key to play again");
+                    // console.log("game lose, press any key to play again");
                     hangmanGame.gameOver = true;
                 }
                 hangmanGame.updateOutput();
@@ -187,12 +190,12 @@ document.onkeyup = function (event) {
                     // add a win:
                     hangmanGame.playerWins++;
                     hangmanGame.consoleText.textContent = "Well get along little doggie! You win!";
-                    console.log("game win, press any key to play again");
+                    // console.log("game win, press any key to play again");
                     hangmanGame.gameOver = true;
                 } else {
                     hangmanGame.consoleText.textContent = "Well hoooo-ee! You got one!";
                     hangmanGame.correctSound.play();
-                    console.log("Correct");
+                    // console.log("Correct");
                 }
                 hangmanGame.updateOutput();
             }
@@ -202,7 +205,7 @@ document.onkeyup = function (event) {
             hangmanGame.updateOutput();
             consoleTest();
             hangmanGame.consoleText.textContent = "C'mon pardner, you tried this one already."
-            console.log("You've already guessed this letter");
+            // console.log("You've already guessed this letter");
         }
         else if (hangmanGame.letterCheck(userInput) == false) {
             // illegal input
@@ -210,7 +213,7 @@ document.onkeyup = function (event) {
             consoleTest();
             hangmanGame.consoleText.textContent = "That...that's not a letter.";
             hangmanGame.wrongSound.play();
-            console.log("Illegal input");
+            // console.log("Illegal input");
         }
     } else {
         // this code only runs if the user presses a key while hangmanGame.gameOver = false
