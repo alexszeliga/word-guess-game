@@ -9,7 +9,7 @@ enjoy in good health, good luck
 
 
 body {
-    background-image: url("../images/wavecut.png");
+    background-image: url("../images/sun-pattern.png");
     font-family: 'Oswald', sans-serif;
 }
 h1,h2,h3,h4,h5,h6 {
@@ -17,7 +17,13 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 h1 {
-    font-size: 36px;
+    font-size: 61px;
+    letter-spacing: 6px;
+    line-height: 80%;
+}
+
+h6 {
+    font-size: 3em;
 }
 
 .clearfix::after {

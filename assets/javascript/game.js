@@ -46,14 +46,14 @@ var hangmanGame = {
     wrongSound: document.getElementById("wrong-sound"),
     gameInit: function () {
         // set/reset all game variables
-        this.playerLives = 6;
+        this.playerLives = 8;
         this.gameWord = this.randomWord();
         this.guessedLetters = [];
         this.unguessedLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
         this.gameWordArray = this.wordArray(this.gameWord);
         this.gameBoolArray = this.genBoolWordArray(this.gameWord)
         this.gameOver = false;
-        this.consoleText.textContent = "Choose any letter to get started!";
+        this.consoleText.textContent = "Choose any letter to get going!";
         this.usedLetters = "Used Letters: ";
     },
     letterCheck: function (userLetter) {
@@ -139,7 +139,8 @@ function consoleTest() {
 //                                       Main gameplay routine
 //----------------------------------------------------------------------------------------------
 //
-hangmanGame.consoleText.textContent = "Hey, I'm cowboy Boring Bill. Press any key to get started!";
+hangmanGame.consoleText.textContent = "Hey, I'm cowboy Boring Bill. Press any key on your keyboard!";
+
 // user presses any key
 document.onkeyup = function (event) {
     if (hangmanGame.gameOver == false) {
@@ -159,9 +160,7 @@ document.onkeyup = function (event) {
                 // if not, do this: subtract one player life
                 hangmanGame.playerLives = hangmanGame.playerLives - 1;
                 // also, add the current letter to the "guessedLetters" string
-                hangmanGame.updateOutput();
-                consoleTest();
-                hangmanGame.updateOutput();
+
                 // test if lives remain:
                 if (hangmanGame.playerLives > 0) {
                     hangmanGame.consoleText.textContent = "Tarnation! That ain't it.";
@@ -173,6 +172,7 @@ document.onkeyup = function (event) {
                     console.log("game lose, press any key to play again");
                     hangmanGame.gameOver = true;
                 }
+                hangmanGame.updateOutput();
             } else {
                 // iterate through the boolean array, flipping where necessary.
                 for (i = 0; i < hangmanGame.gameBoolArray.length; i++) {
@@ -180,7 +180,7 @@ document.onkeyup = function (event) {
                         hangmanGame.gameBoolArray[i] = true;
                     }
                 }
-                hangmanGame.updateOutput();
+                
                 consoleTest();
                 // check if the word is complete:
                 if (hangmanGame.gameBoolArray.indexOf(false) == -1) {
@@ -194,6 +194,7 @@ document.onkeyup = function (event) {
                     hangmanGame.correctSound.play();
                     console.log("Correct");
                 }
+                hangmanGame.updateOutput();
             }
         }
         else if (hangmanGame.letterCheck(userInput) && hangmanGame.confLetterUnguessed(userInput) == false) {
